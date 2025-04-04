@@ -8,6 +8,8 @@ interface AnimatedQuillProps {
   delay?: number;
   speed?: number;
   cursorStyle?: "pen" | "quill" | "none";
+  cursorSize?: "sm" | "md" | "lg";
+  style?: "cursive" | "handwritten" | "normal";
   onComplete?: () => void;
 }
 
@@ -17,6 +19,8 @@ const AnimatedQuill: React.FC<AnimatedQuillProps> = ({
   delay = 0,
   speed = 1.5,
   cursorStyle = "pen",
+  cursorSize = "md",
+  style = "normal",
   onComplete
 }) => {
   const quillRef = useRef<HTMLSpanElement>(null);
@@ -42,6 +46,18 @@ const AnimatedQuill: React.FC<AnimatedQuillProps> = ({
     };
   }, [delay, speed, onComplete]);
   
+  const cursorSizeClass = {
+    sm: "text-xs",
+    md: "text-sm",
+    lg: "text-base"
+  };
+
+  const fontStyleClass = {
+    cursive: "font-handwriting",
+    handwritten: "font-handwriting",
+    normal: ""
+  };
+  
   return (
     <span 
       ref={quillRef} 
@@ -49,8 +65,13 @@ const AnimatedQuill: React.FC<AnimatedQuillProps> = ({
         "quill-text", 
         cursorStyle === "pen" && "cursor-pen",
         cursorStyle === "quill" && "cursor-quill",
+        fontStyleClass[style],
+        cursorSizeClass[cursorSize],
         className
       )}
+      style={{
+        textRendering: "optimizeLegibility"
+      }}
     >
       {text}
     </span>
