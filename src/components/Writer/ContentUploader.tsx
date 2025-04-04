@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Upload, X, Type, Image, PenTool, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -7,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import AnimatedQuill from "../UI/AnimatedQuill";
 import BookPage from "../UI/BookPage";
+import StickyNote from "../UI/StickyNote";
 
 const ContentUploader = () => {
   const [isOpen, setIsOpen] = useState(false);
