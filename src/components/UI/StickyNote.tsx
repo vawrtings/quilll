@@ -8,6 +8,7 @@ interface StickyNoteProps {
   color?: "yellow" | "blue" | "pink" | "green" | "purple" | "orange";
   rotation?: number;
   floating?: boolean;
+  flying?: boolean;
   onClick?: () => void;
   interactive?: boolean;
 }
@@ -18,6 +19,7 @@ const StickyNote: React.FC<StickyNoteProps> = ({
   color = "yellow",
   rotation = 0,
   floating = false,
+  flying = false,
   onClick,
   interactive = false,
 }) => {
@@ -36,7 +38,8 @@ const StickyNote: React.FC<StickyNoteProps> = ({
         "sticky-note p-4 max-w-xs", 
         colorClasses[color],
         floating && "animate-float",
-        interactive && "cursor-pointer transform hover:scale-105 hover:-translate-y-1 transition-all duration-300",
+        flying && "animate-fly",
+        interactive && "cursor-pointer transform hover:scale-105 hover:-translate-y-1 hover:rotate-3 transition-all duration-300",
         className
       )}
       style={{ 
@@ -47,7 +50,7 @@ const StickyNote: React.FC<StickyNoteProps> = ({
       role={interactive ? "button" : undefined}
       tabIndex={interactive ? 0 : undefined}
     >
-      <div className="font-handwriting text-ink-dark">
+      <div className="font-handwriting text-ink-dark font-medium text-lg leading-snug">
         {children}
       </div>
     </div>

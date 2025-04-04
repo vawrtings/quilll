@@ -52,17 +52,17 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-parchment overflow-x-hidden">
+    <div className="min-h-screen bg-parchment overflow-x-hidden cursor-quill">
       {/* Navigation Sticky Notes - positioned absolutely */}
       <div className="fixed top-6 right-6 z-50 flex flex-col gap-4">
-        <StickyNote color="green" rotation={2} floating interactive onClick={() => handleNavigation("/signup")}>
+        <StickyNote color="green" rotation={2} flying interactive onClick={() => handleNavigation("/signup")}>
           <div className="flex items-center justify-center flex-col gap-1">
             <User className="w-4 h-4 mb-1" />
             <p className="text-center">Sign Up</p>
           </div>
         </StickyNote>
         
-        <StickyNote color="blue" rotation={-3} floating interactive onClick={() => handleNavigation("/login")}>
+        <StickyNote color="blue" rotation={-3} flying interactive onClick={() => handleNavigation("/login")}>
           <div className="flex items-center justify-center flex-col gap-1">
             <BookOpen className="w-4 h-4 mb-1" />
             <p className="text-center">Login</p>
@@ -71,14 +71,14 @@ const Index = () => {
       </div>
       
       <div className="fixed top-6 left-6 z-50 flex flex-col gap-4">
-        <StickyNote color="pink" rotation={3} floating interactive onClick={() => handleNavigation("/explore")}>
+        <StickyNote color="pink" rotation={3} flying interactive onClick={() => handleNavigation("/explore")}>
           <div className="flex items-center justify-center flex-col gap-1">
             <Search className="w-4 h-4 mb-1" />
             <p className="text-center">Explore</p>
           </div>
         </StickyNote>
         
-        <StickyNote color="yellow" rotation={-2} floating interactive onClick={() => handleNavigation("/upload")}>
+        <StickyNote color="yellow" rotation={-2} flying interactive onClick={() => handleNavigation("/upload")}>
           <div className="flex items-center justify-center flex-col gap-1">
             <Upload className="w-4 h-4 mb-1" />
             <p className="text-center">Upload</p>
@@ -90,38 +90,40 @@ const Index = () => {
         {/* Hero section with pen animation */}
         <section className="bg-parchment-dark py-16 sm:py-24 border-b border-ink/10 relative overflow-hidden">
           {/* Floating elements for visual interest */}
-          <div className="absolute top-10 right-10 transform rotate-6 opacity-20 animate-float">
+          <div className="absolute top-10 right-10 transform rotate-6 opacity-20 animate-fly">
             <Feather className="w-16 h-16 text-ink" />
           </div>
-          <div className="absolute bottom-10 left-10 transform -rotate-12 opacity-20 animate-float" style={{ animationDelay: "1.5s" }}>
+          <div className="absolute bottom-10 left-10 transform -rotate-12 opacity-20 animate-fly" style={{ animationDelay: "1.5s" }}>
             <PenTool className="w-10 h-10 text-ink" />
           </div>
           
           <div className="max-w-3xl mx-auto text-center px-4">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-handwriting font-semibold mb-6 space-y-4">
-              <AnimatedQuill 
-                text="Write." 
-                cursorStyle="quill" 
-                speed={1.5} 
-                style="cursive"
-                className="block" 
-              />
-              <AnimatedQuill 
-                text="Share." 
-                cursorStyle="quill"
-                style="cursive" 
-                delay={1.5} 
-                speed={1.5} 
-                className="block" 
-              />
-              <AnimatedQuill 
-                text="Preserve." 
-                cursorStyle="quill"
-                style="cursive" 
-                delay={3} 
-                speed={1.5} 
-                className="block" 
-              />
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-handwriting font-semibold mb-6">
+              <div className="flex items-center justify-center space-x-3">
+                <AnimatedQuill 
+                  text="Write." 
+                  cursorStyle="quill" 
+                  speed={1.5} 
+                  style="cursive"
+                  inline
+                />
+                <AnimatedQuill 
+                  text="Share." 
+                  cursorStyle="quill"
+                  style="cursive" 
+                  delay={1.5} 
+                  speed={1.5}
+                  inline
+                />
+                <AnimatedQuill 
+                  text="Preserve." 
+                  cursorStyle="quill"
+                  style="cursive" 
+                  delay={3} 
+                  speed={1.5} 
+                  inline
+                />
+              </div>
             </h1>
             
             <div className="mt-16">
@@ -136,27 +138,27 @@ const Index = () => {
         <div className="relative max-w-4xl mx-auto">
           {/* Decorative sticky notes */}
           <div className="absolute -left-20 top-40 hidden md:block">
-            <StickyNote color="yellow" rotation={-6} floating>
+            <StickyNote color="yellow" rotation={-6} flying>
               <p>Remember that idea about the lighthouse?</p>
               <p className="text-right mt-2">— Me</p>
             </StickyNote>
           </div>
           
           <div className="absolute -right-20 top-80 hidden md:block">
-            <StickyNote color="blue" rotation={4} floating>
+            <StickyNote color="blue" rotation={4} flying>
               <p>Draft due next Tuesday</p>
               <p className="text-right mt-2 text-sm">Don't forget!</p>
             </StickyNote>
           </div>
           
           <div className="absolute -left-20 top-[500px] hidden md:block">
-            <StickyNote color="green" rotation={3} floating>
+            <StickyNote color="green" rotation={3} flying>
               <p>New character idea: a detective with synesthesia</p>
             </StickyNote>
           </div>
           
           <div className="absolute -right-20 top-[650px] hidden md:block">
-            <StickyNote color="pink" rotation={-5} floating>
+            <StickyNote color="pink" rotation={-5} flying>
               <p>Find a better word for "whisper"</p>
             </StickyNote>
           </div>
@@ -168,32 +170,32 @@ const Index = () => {
             onScroll={handleScroll}
           >
             <BookPage pageNumber={1} transitionDelay={1}>
-              <h2 className="text-2xl font-handwriting mb-4">Your Writing Sanctuary</h2>
-              <p className="mb-4 text-ink/80 leading-relaxed font-handwriting">
+              <h2 className="text-2xl font-handwriting mb-4 text-ink">Your Writing Sanctuary</h2>
+              <p className="mb-4 text-ink/90 leading-relaxed font-handwriting text-lg">
                 Welcome to a space designed for writers. Free from distractions, 
                 secure from content theft, and beautifully minimalist to let your words
                 take center stage.
               </p>
-              <p className="text-ink/80 leading-relaxed font-handwriting">
+              <p className="text-ink/90 leading-relaxed font-handwriting text-lg">
                 Begin by uploading your first piece or explore the features designed
                 to protect and showcase your work.
               </p>
             </BookPage>
             
             <BookPage pageNumber={2} transitionDelay={2}>
-              <h2 className="text-2xl font-handwriting mb-4">Pirate-Proof Protection</h2>
-              <p className="mb-4 text-ink/80 leading-relaxed font-handwriting">
+              <h2 className="text-2xl font-handwriting mb-4 text-ink">Pirate-Proof Protection</h2>
+              <p className="mb-4 text-ink/90 leading-relaxed font-handwriting text-lg">
                 Every piece you publish is protected with our unique technology that
                 prevents unauthorized copying while still allowing readers to enjoy your work.
               </p>
-              <p className="text-ink/80 leading-relaxed font-handwriting">
+              <p className="text-ink/90 leading-relaxed font-handwriting text-lg">
                 Your words remain yours, always.
               </p>
             </BookPage>
             
             <BookPage pageNumber={3} transitionDelay={3}>
-              <h2 className="text-2xl font-handwriting mb-4">Build Your Collection</h2>
-              <p className="mb-4 text-ink/80 leading-relaxed font-handwriting">
+              <h2 className="text-2xl font-handwriting mb-4 text-ink">Build Your Collection</h2>
+              <p className="mb-4 text-ink/90 leading-relaxed font-handwriting text-lg">
                 As you write more, your personal library grows. Organize your works
                 by themes, series, or projects. Create collections that showcase your
                 literary journey.
@@ -204,13 +206,13 @@ const Index = () => {
             </BookPage>
             
             <BookPage pageNumber={4} transitionDelay={4}>
-              <h2 className="text-2xl font-handwriting mb-4">Connect With Readers</h2>
-              <p className="mb-4 text-ink/80 leading-relaxed font-handwriting">
+              <h2 className="text-2xl font-handwriting mb-4 text-ink">Connect With Readers</h2>
+              <p className="mb-4 text-ink/90 leading-relaxed font-handwriting text-lg">
                 Share your publications with a community that values the written word.
                 Receive thoughtful feedback and connect with fellow writers who share your passion.
               </p>
               <div className="mt-8 text-center">
-                <Button className="bg-ink/10 text-ink hover:bg-ink/20 font-handwriting">
+                <Button className="bg-ink/10 text-ink hover:bg-ink/20 font-handwriting text-lg">
                   Start Writing Now
                 </Button>
               </div>

@@ -8,6 +8,7 @@ interface BookPageProps {
   transitionDelay?: number;
   pageNumber?: number;
   corner?: boolean;
+  spiral?: boolean;
 }
 
 const BookPage: React.FC<BookPageProps> = ({
@@ -16,6 +17,7 @@ const BookPage: React.FC<BookPageProps> = ({
   transitionDelay = 0,
   pageNumber,
   corner = true,
+  spiral = false,
 }) => {
   const pageRef = useRef<HTMLDivElement>(null);
   
@@ -42,9 +44,18 @@ const BookPage: React.FC<BookPageProps> = ({
       ref={pageRef}
       className={cn(
         "book-page p-6 mb-10 relative", 
+        spiral && "border-t border-l border-b border-ink/10 rounded-l-md",
         className
       )}
     >
+      {spiral && (
+        <div className="absolute left-0 inset-y-0 w-6 flex flex-col justify-around items-center">
+          {[...Array(7)].map((_, i) => (
+            <div key={i} className="w-3 h-3 rounded-full bg-ink/20"></div>
+          ))}
+        </div>
+      )}
+      
       {corner && (
         <div className="absolute top-0 right-0 w-0 h-0 border-t-20 border-r-20 border-t-ink/5 border-r-parchment-dark transform -translate-y-1 translate-x-1"></div>
       )}
@@ -53,7 +64,7 @@ const BookPage: React.FC<BookPageProps> = ({
           {pageNumber}
         </div>
       )}
-      <div className="relative z-10">
+      <div className={cn("relative z-10", spiral && "pl-4")}>
         {children}
       </div>
     </div>

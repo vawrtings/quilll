@@ -10,6 +10,7 @@ interface AnimatedQuillProps {
   cursorStyle?: "pen" | "quill" | "none";
   cursorSize?: "sm" | "md" | "lg";
   style?: "cursive" | "handwritten" | "normal";
+  inline?: boolean;
   onComplete?: () => void;
 }
 
@@ -21,6 +22,7 @@ const AnimatedQuill: React.FC<AnimatedQuillProps> = ({
   cursorStyle = "pen",
   cursorSize = "md",
   style = "normal",
+  inline = false,
   onComplete
 }) => {
   const quillRef = useRef<HTMLSpanElement>(null);
@@ -67,6 +69,7 @@ const AnimatedQuill: React.FC<AnimatedQuillProps> = ({
         cursorStyle === "quill" && "cursor-quill",
         fontStyleClass[style],
         cursorSizeClass[cursorSize],
+        inline ? "inline-block" : "block",
         className
       )}
       style={{

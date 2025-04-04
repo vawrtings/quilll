@@ -23,6 +23,8 @@ export default {
 				'playfair': ['Playfair Display', 'serif'],
 				'sans': ['Inter', 'sans-serif'],
 				'handwriting': ['Caveat', 'cursive'],
+				'comic': ['Comic Neue', 'cursive'],
+				'cursive': ['Dancing Script', 'cursive'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
@@ -99,6 +101,13 @@ export default {
 					'0%, 100%': { transform: 'translateY(0)' },
 					'50%': { transform: 'translateY(-10px)' },
 				},
+				'fly': {
+					'0%': { transform: 'translateY(0) translateX(0) rotate(0deg)' },
+					'25%': { transform: 'translateY(-15px) translateX(5px) rotate(2deg)' },
+					'50%': { transform: 'translateY(-5px) translateX(10px) rotate(-1deg)' },
+					'75%': { transform: 'translateY(-10px) translateX(-5px) rotate(1deg)' },
+					'100%': { transform: 'translateY(0) translateX(0) rotate(0deg)' },
+				},
 				'cursor-blink': {
 					'0%, 100%': { opacity: '1' },
 					'50%': { opacity: '0' },
@@ -112,6 +121,7 @@ export default {
 				'fade-in': 'fade-in 0.5s ease-out',
 				'page-flip': 'page-flip 1.5s ease-in-out',
 				'float': 'float 6s ease-in-out infinite',
+				'fly': 'fly 8s ease-in-out infinite',
 				'cursor': 'cursor-blink 0.8s step-end infinite',
 			},
 			borderRadius: {

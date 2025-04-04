@@ -1,5 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;500;600&family=Comic+Neue:wght@400;700&family=Dancing+Script:wght@400;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -69,7 +69,7 @@
   }
 
   .quill-text {
-    @apply inline-block w-0 overflow-hidden whitespace-nowrap;
+    @apply overflow-hidden whitespace-nowrap;
     @apply animate-quill-write;
   }
 
@@ -81,6 +81,10 @@
   .cursor-quill::after {
     content: '✒️';
     @apply animate-cursor ml-0.5 text-xs;
+  }
+
+  .cursor-quill {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24' fill='none' stroke='%231A1F2C' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m20 17-2-3-3-3 3-3 2-3v12Z'/%3E%3Cpath d='M20 17h-5c-.6 0-1 .4-1 1v1c0 .6-.4 1-1 1h-6a2 2 0 0 1-2-2v-4c0-.6.4-1 1-1h4a1 1 0 0 0 1-1v-3'/%3E%3C/svg%3E"), auto;
   }
 
   .page-turn {
@@ -153,11 +157,40 @@
     box-shadow: -2px 0 5px rgba(0,0,0,0.03);
     border-radius: 0 5px 5px 0;
   }
+  
+  .notebook-paper {
+    @apply relative;
+    background: repeating-linear-gradient(
+      to bottom,
+      transparent,
+      transparent 27px,
+      #1A1F2C10 27px,
+      #1A1F2C10 28px
+    );
+  }
+  
+  .notebook-lines textarea {
+    line-height: 28px;
+    background: transparent;
+  }
+  
+  .ink-bottle {
+    @apply relative;
+  }
+  
+  .ink-bottle::after {
+    content: '🖋';
+    @apply absolute -top-3 -right-2 text-lg;
+  }
 }
 
 @layer utilities {
   .animate-float {
     animation: float 6s ease-in-out infinite;
+  }
+  
+  .animate-fly {
+    animation: fly 8s ease-in-out infinite;
   }
 
   .animate-cursor {
@@ -166,6 +199,14 @@
 
   .font-handwriting {
     font-family: 'Caveat', cursive;
+  }
+  
+  .font-comic {
+    font-family: 'Comic Neue', cursive;
+  }
+  
+  .font-cursive {
+    font-family: 'Dancing Script', cursive;
   }
 
   .scroll-smooth-book {
@@ -186,11 +227,38 @@
   }
 }
 
+@keyframes fly {
+  0% {
+    transform: translatey(0px) translatex(0px) rotate(0deg);
+  }
+  25% {
+    transform: translatey(-15px) translatex(5px) rotate(2deg);
+  }
+  50% {
+    transform: translatey(-5px) translatex(10px) rotate(-1deg);
+  }
+  75% {
+    transform: translatey(-10px) translatex(-5px) rotate(1deg);
+  }
+  100% {
+    transform: translatey(0px) translatex(0px) rotate(0deg);
+  }
+}
+
 @keyframes blink {
   from, to {
     opacity: 1;
   }
   50% {
     opacity: 0;
+  }
+}
+
+@keyframes quill-write {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
   }
 }
