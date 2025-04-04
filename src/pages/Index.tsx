@@ -3,12 +3,13 @@ import { useState, useEffect, useRef } from "react";
 import Navbar from "@/components/Layout/Navbar";
 import ContentUploader from "@/components/Writer/ContentUploader";
 import AnimatedQuill from "@/components/UI/AnimatedQuill";
+import EnhancedAnimatedQuill from "@/components/UI/EnhancedAnimatedQuill";
 import StickyNote from "@/components/UI/StickyNote";
 import BookPage from "@/components/UI/BookPage";
 import { Button } from "@/components/ui/button";
 import { Book, PenTool, Feather, BookOpen, User, Search, Upload } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const Index = () => {
   const [loading, setLoading] = useState(true);
@@ -46,23 +47,21 @@ const Index = () => {
 
   // Navigation handlers
   const handleNavigation = (path: string) => {
-    // In a real app, this would navigate to the respective route
-    console.log(`Navigating to: ${path}`);
-    // navigate(path);
+    navigate(path);
   };
 
   return (
     <div className="min-h-screen bg-parchment overflow-x-hidden cursor-quill">
       {/* Navigation Sticky Notes - positioned absolutely */}
       <div className="fixed top-6 right-6 z-50 flex flex-col gap-4">
-        <StickyNote color="green" rotation={2} flying interactive onClick={() => handleNavigation("/signup")}>
+        <StickyNote color="green" rotation={2} flying interactive onClick={() => handleNavigation("/auth")}>
           <div className="flex items-center justify-center flex-col gap-1">
             <User className="w-4 h-4 mb-1" />
             <p className="text-center">Sign Up</p>
           </div>
         </StickyNote>
         
-        <StickyNote color="blue" rotation={-3} flying interactive onClick={() => handleNavigation("/login")}>
+        <StickyNote color="blue" rotation={-3} flying interactive onClick={() => handleNavigation("/auth")}>
           <div className="flex items-center justify-center flex-col gap-1">
             <BookOpen className="w-4 h-4 mb-1" />
             <p className="text-center">Login</p>
@@ -98,37 +97,43 @@ const Index = () => {
           </div>
           
           <div className="max-w-3xl mx-auto text-center px-4">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-handwriting font-semibold mb-6">
-              <div className="flex items-center justify-center space-x-3">
-                <AnimatedQuill 
+            <h1 className="mb-12">
+              <div className="flex flex-row items-center justify-center space-x-6">
+                <EnhancedAnimatedQuill 
                   text="Write." 
                   cursorStyle="quill" 
                   speed={1.5} 
                   style="cursive"
+                  size="xl"
                   inline
                 />
-                <AnimatedQuill 
+                <EnhancedAnimatedQuill 
                   text="Share." 
                   cursorStyle="quill"
                   style="cursive" 
                   delay={1.5} 
                   speed={1.5}
+                  size="xl"
                   inline
                 />
-                <AnimatedQuill 
+                <EnhancedAnimatedQuill 
                   text="Preserve." 
                   cursorStyle="quill"
                   style="cursive" 
                   delay={3} 
                   speed={1.5} 
+                  size="xl"
                   inline
                 />
               </div>
             </h1>
             
             <div className="mt-16">
-              <Button className="bg-ink text-parchment hover:bg-ink-light font-handwriting text-lg">
-                <BookOpen className="mr-2 h-4 w-4" /> Begin Your Story
+              <Button 
+                className="bg-ink text-parchment hover:bg-ink-light font-handwriting text-xl px-6 py-6"
+                onClick={() => navigate("/upload")}
+              >
+                <BookOpen className="mr-2 h-5 w-5" /> Begin Your Story
               </Button>
             </div>
           </div>
@@ -212,7 +217,10 @@ const Index = () => {
                 Receive thoughtful feedback and connect with fellow writers who share your passion.
               </p>
               <div className="mt-8 text-center">
-                <Button className="bg-ink/10 text-ink hover:bg-ink/20 font-handwriting text-lg">
+                <Button 
+                  className="bg-ink/10 text-ink hover:bg-ink/20 font-handwriting text-lg"
+                  onClick={() => navigate("/upload")}
+                >
                   Start Writing Now
                 </Button>
               </div>
