@@ -1,5 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -46,6 +46,7 @@
   
   html {
     @apply scroll-smooth;
+    scroll-behavior: smooth;
   }
 
   body {
@@ -72,6 +73,51 @@
     @apply animate-quill-write;
   }
 
+  .cursor-pen::after {
+    content: '|';
+    @apply animate-cursor ml-0.5;
+  }
+
+  .cursor-quill::after {
+    content: '✒️';
+    @apply animate-cursor ml-0.5 text-xs;
+  }
+
+  .page-turn {
+    @apply transition-all duration-700 ease-in-out;
+    perspective: 1000px;
+  }
+
+  .page-turn-enter {
+    transform: rotateY(-90deg);
+    opacity: 0;
+  }
+
+  .page-turn-enter-active {
+    transform: rotateY(0deg);
+    opacity: 1;
+  }
+
+  .page-turn-exit {
+    transform: rotateY(0deg);
+    opacity: 1;
+  }
+
+  .page-turn-exit-active {
+    transform: rotateY(90deg);
+    opacity: 0;
+  }
+
+  .sticky-note {
+    @apply relative rounded shadow-lg transform transition-all duration-300 ease-in-out;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  }
+
+  .sticky-note:hover {
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    transform: translateY(-5px) scale(1.02);
+  }
+
   .pirate-proof {
     user-select: none;
     -webkit-user-select: none;
@@ -86,5 +132,65 @@
   .watermark::after {
     content: attr(data-author);
     @apply absolute bottom-0 right-0 text-xs text-ink/20 font-sans p-1;
+  }
+
+  .book-page {
+    @apply bg-parchment shadow-md rounded-r-lg;
+    position: relative;
+    height: 100%;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .book-page:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 30px;
+    background: linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,0.05) 100%);
+    border-left: 1px solid rgba(0,0,0,0.05);
+    box-shadow: -2px 0 5px rgba(0,0,0,0.03);
+    border-radius: 0 5px 5px 0;
+  }
+}
+
+@layer utilities {
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-cursor {
+    animation: blink 0.8s step-end infinite;
+  }
+
+  .font-handwriting {
+    font-family: 'Caveat', cursive;
+  }
+
+  .scroll-smooth-book {
+    scroll-behavior: smooth;
+    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translatey(0px);
+  }
+  50% {
+    transform: translatey(-10px);
+  }
+  100% {
+    transform: translatey(0px);
+  }
+}
+
+@keyframes blink {
+  from, to {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
   }
 }

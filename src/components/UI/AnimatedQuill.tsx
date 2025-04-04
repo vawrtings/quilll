@@ -7,6 +7,7 @@ interface AnimatedQuillProps {
   className?: string;
   delay?: number;
   speed?: number;
+  cursorStyle?: "pen" | "quill" | "none";
   onComplete?: () => void;
 }
 
@@ -15,6 +16,7 @@ const AnimatedQuill: React.FC<AnimatedQuillProps> = ({
   className,
   delay = 0,
   speed = 1.5,
+  cursorStyle = "pen",
   onComplete
 }) => {
   const quillRef = useRef<HTMLSpanElement>(null);
@@ -43,7 +45,12 @@ const AnimatedQuill: React.FC<AnimatedQuillProps> = ({
   return (
     <span 
       ref={quillRef} 
-      className={cn("quill-text", className)}
+      className={cn(
+        "quill-text", 
+        cursorStyle === "pen" && "cursor-pen",
+        cursorStyle === "quill" && "cursor-quill",
+        className
+      )}
     >
       {text}
     </span>
