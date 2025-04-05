@@ -1,0 +1,18 @@
+
+@layer base {
+  body {
+    @apply cursor-ink-drop;
+  }
+
+  a, button, input, textarea, select, .clickable {
+    @apply cursor-pointer;
+  }
+}
+
+.cursor-ink-drop {
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><circle cx='8' cy='8' r='4' fill='%231A1F2C'/></svg>") 8 8, auto;
+}
+
+.dark .cursor-ink-drop {
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><circle cx='8' cy='8' r='4' fill='%23F6F5F0'/></svg>") 8 8, auto;
+}

@@ -9,7 +9,74 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      media: {
+        Row: {
+          created_at: string
+          file_name: string
+          file_type: string
+          file_url: string
+          id: string
+          writing_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          file_name: string
+          file_type: string
+          file_url: string
+          id?: string
+          writing_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          file_name?: string
+          file_type?: string
+          file_url?: string
+          id?: string
+          writing_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "media_writing_id_fkey"
+            columns: ["writing_id"]
+            isOneToOne: false
+            referencedRelation: "writings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      writings: {
+        Row: {
+          content: string
+          created_at: string
+          excerpt: string | null
+          id: string
+          published: boolean
+          title: string
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          excerpt?: string | null
+          id?: string
+          published?: boolean
+          title: string
+          type: string
+          updated_at?: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          excerpt?: string | null
+          id?: string
+          published?: boolean
+          title?: string
+          type?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

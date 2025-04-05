@@ -112,6 +112,10 @@ export default {
 					'0%, 100%': { opacity: '1' },
 					'50%': { opacity: '0' },
 				},
+				'ink-drop': {
+					'0%': { transform: 'scale(0)', opacity: '1' },
+					'100%': { transform: 'scale(20)', opacity: '0' },
+				},
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
@@ -123,6 +127,10 @@ export default {
 				'float': 'float 6s ease-in-out infinite',
 				'fly': 'fly 8s ease-in-out infinite',
 				'cursor': 'cursor-blink 0.8s step-end infinite',
+				'ink-drop': 'ink-drop 0.5s ease-out forwards',
+			},
+			cursor: {
+				'ink-drop': 'url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'16\' height=\'16\' viewBox=\'0 0 16 16\'><circle cx=\'8\' cy=\'8\' r=\'4\' fill=\'%231A1F2C\'/></svg>") 8 8, auto',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
