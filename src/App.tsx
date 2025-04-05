@@ -37,6 +37,12 @@ const App = () => {
     }
   };
 
+  useEffect(() => {
+    console.log("App mounted, checking setup status:");
+    console.log("Device selected:", localStorage.getItem("device-selected"));
+    console.log("User type:", localStorage.getItem("user-type"));
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
@@ -48,7 +54,10 @@ const App = () => {
               {showSplash ? (
                 <SplashScreen 
                   duration={3500} 
-                  onComplete={() => setShowSplash(false)} 
+                  onComplete={() => {
+                    console.log("Splash screen completed");
+                    setShowSplash(false);
+                  }} 
                 />
               ) : (
                 <Routes>

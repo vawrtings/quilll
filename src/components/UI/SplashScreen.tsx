@@ -14,14 +14,11 @@ const SplashScreen = ({ duration = 3000, onComplete }: SplashScreenProps) => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
+      console.log("SplashScreen timer completed");
       setIsAnimationComplete(true);
       
       if (onComplete) {
         onComplete();
-      } else {
-        // Default behavior: redirect to device selection if first visit
-        const isFirstVisit = !localStorage.getItem("device-selected");
-        navigate(isFirstVisit ? "/select-device" : "/");
       }
     }, duration);
 

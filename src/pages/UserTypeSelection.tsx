@@ -20,8 +20,7 @@ const UserTypeSelection = () => {
     // Navigate to auth if writer, or home if reader
     if (userType === "writer") {
       // Writers need to sign in before they can post
-      const isLoggedIn = localStorage.getItem("quill-logged-in") === "true";
-      navigate(isLoggedIn ? "/" : "/auth");
+      navigate("/auth");
     } else {
       navigate("/");
     }
@@ -34,6 +33,7 @@ const UserTypeSelection = () => {
     // If no device selected yet, redirect to device selection
     if (!deviceSelected) {
       navigate("/select-device");
+      return;
     }
     
     // If user type already selected, redirect to home
