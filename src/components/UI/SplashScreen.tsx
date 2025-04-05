@@ -19,7 +19,7 @@ const SplashScreen = ({ duration = 3000, onComplete }: SplashScreenProps) => {
       if (onComplete) {
         onComplete();
       } else {
-        // Default behavior: redirect based on first visit
+        // Default behavior: redirect to device selection if first visit
         const isFirstVisit = !localStorage.getItem("device-selected");
         navigate(isFirstVisit ? "/select-device" : "/");
       }

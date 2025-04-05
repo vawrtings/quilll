@@ -18,16 +18,21 @@ const DeviceSelection = () => {
       description: "Your experience will be optimized for this device type.",
     });
     
-    navigate("/");
+    // Navigate to user type selection instead of home
+    navigate("/select-user-type");
   };
   
   useEffect(() => {
     // Check if user has already selected a device
     const deviceSelected = localStorage.getItem("device-selected");
     
-    // If device already selected, redirect to home
-    if (deviceSelected) {
+    // If device already selected and user type is also selected, redirect to home
+    if (deviceSelected && localStorage.getItem("user-type")) {
       navigate("/");
+    }
+    // If device selected but no user type, go to user type selection
+    else if (deviceSelected) {
+      navigate("/select-user-type");
     }
   }, [navigate]);
 

@@ -14,8 +14,8 @@ import Explore from "./pages/Explore";
 import Upload from "./pages/Upload";
 import NotFound from "./pages/NotFound";
 import Profile from "./pages/Profile";
-import DeviceDetection from "./pages/DeviceDetection";
 import DeviceSelection from "./pages/DeviceSelection";
+import UserTypeSelection from "./pages/UserTypeSelection";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +24,18 @@ const App = () => {
   
   // Check if this is user's first visit
   const isFirstVisit = !localStorage.getItem("device-selected");
+  const userTypeSelected = localStorage.getItem("user-type");
+
+  // Determine initial route based on setup completion
+  const getInitialRoute = () => {
+    if (!localStorage.getItem("device-selected")) {
+      return <Navigate to="/select-device" />;
+    } else if (!localStorage.getItem("user-type")) {
+      return <Navigate to="/select-user-type" />;
+    } else {
+      return <Index />;
+    }
+  };
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -40,14 +52,14 @@ const App = () => {
                 />
               ) : (
                 <Routes>
-                  <Route path="/" element={isFirstVisit ? <Navigate to="/select-device" /> : <Index />} />
+                  <Route path="/" element={getInitialRoute()} />
                   <Route path="/select-device" element={<DeviceSelection />} />
+                  <Route path="/select-user-type" element={<UserTypeSelection />} />
                   <Route path="/auth" element={<Auth />} />
                   <Route path="/explore" element={<Explore />} />
                   <Route path="/explore/:categoryParam" element={<Explore />} />
                   <Route path="/upload" element={<Upload />} />
                   <Route path="/profile" element={<Profile />} />
-                  <Route path="/device" element={<DeviceDetection />} />
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>

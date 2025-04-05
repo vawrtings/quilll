@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,13 +8,20 @@ import { toast } from "sonner";
 import { BookOpen, Mail, Lock, UserPlus, LogIn } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import AnimatedQuill from "@/components/UI/AnimatedQuill";
-import BookPage from "@/components/UI/BookPage";
 
 const Auth = () => {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const isWriter = localStorage.getItem("user-type") === "writer";
+
+  useEffect(() => {
+    // If user is already logged in, redirect to home
+    if (localStorage.getItem("quill-logged-in") === "true") {
+      navigate("/");
+    }
+  }, [navigate]);
 
   // Handle sign in
   const handleSignIn = async (e: React.FormEvent) => {
@@ -22,12 +29,11 @@ const Auth = () => {
     setLoading(true);
     
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
+      // Mock authentication for demo purposes
+      await new Promise(resolve => setTimeout(resolve, 1000));
       
-      if (error) throw error;
+      // Set logged in status
+      localStorage.setItem("quill-logged-in", "true");
       
       toast.success("Welcome back to Quill!");
       navigate("/");
@@ -44,15 +50,14 @@ const Auth = () => {
     setLoading(true);
     
     try {
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-      });
+      // Mock authentication for demo purposes
+      await new Promise(resolve => setTimeout(resolve, 1000));
       
-      if (error) throw error;
+      // Set logged in status
+      localStorage.setItem("quill-logged-in", "true");
       
-      toast.success("Account created successfully! Please check your email for verification.");
-      // Do not navigate away as they might need to verify their email first
+      toast.success("Account created successfully!");
+      navigate("/");
     } catch (error: any) {
       toast.error(error.message || "Failed to create account");
     } finally {
@@ -76,6 +81,11 @@ const Auth = () => {
           <div className="text-center mb-8">
             <h1 className="text-3xl font-playfair font-bold text-ink mb-2">Welcome to Quill</h1>
             <p className="text-ink/70 font-handwriting text-lg">Where words become art, safely preserved</p>
+            {isWriter && (
+              <p className="mt-4 text-ink/90 bg-parchment-dark p-2 rounded-md">
+                As a writer, you need to sign in to publish your content.
+              </p>
+            )}
           </div>
           
           <div className="bg-parchment-dark rounded-lg shadow-lg p-8 border border-ink/10">

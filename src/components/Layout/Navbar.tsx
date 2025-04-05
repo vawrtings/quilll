@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { BookOpen, Menu, X, Upload, User, Search, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useDeviceContext } from "@/contexts/DeviceContext";
@@ -9,15 +9,17 @@ import {
   NavigationMenu,
   NavigationMenuList,
   NavigationMenuItem,
-  NavigationMenuLink,
 } from "@/components/ui/navigation-menu";
+import { useToast } from "@/hooks/use-toast";
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { isMobile } = useDeviceContext();
   const location = useLocation();
+  const navigate = useNavigate();
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const { toast } = useToast();
 
   // Avoid hydration mismatch with theme
   useEffect(() => {
@@ -31,8 +33,32 @@ const Navbar = () => {
     { name: "Writings", path: "/explore/writings" }
   ];
 
-  // Check if user is logged in - in a real app, this would validate with Supabase
+  // Check if user is logged in and is a writer
   const isLoggedIn = localStorage.getItem("quill-logged-in") === "true";
+  const isWriter = localStorage.getItem("user-type") === "writer";
+
+  const handleUploadClick = (e: React.MouseEvent) => {
+    if (!isWriter) {
+      e.preventDefault();
+      toast({
+        title: "Writer account required",
+        description: "Only writers can upload content. Please change your role in settings.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!isLoggedIn) {
+      e.preventDefault();
+      toast({
+        title: "Authentication required",
+        description: "Please sign in to upload content.",
+        variant: "destructive",
+      });
+      navigate("/auth");
+      return;
+    }
+  };
 
   return (
     <nav className="bg-parchment/90 dark:bg-ink/90 backdrop-blur-sm sticky top-0 z-50 border-b border-ink/10 dark:border-parchment/10">
@@ -93,7 +119,7 @@ const Navbar = () => {
               </Button>
             )}
 
-            <Link to="/upload">
+            <Link to="/upload" onClick={handleUploadClick}>
               <Button 
                 variant="ghost" 
                 size="icon" 
@@ -144,6 +170,7 @@ const Navbar = () => {
             <Link
               to="/explore"
               className="block px-3 py-2 text-base font-medium text-ink/80 dark:text-parchment/80 hover:text-ink dark:hover:text-parchment hover:bg-ink/5 dark:hover:bg-parchment/5 rounded-md"
+              onClick={() => setMobileMenuOpen(false)}
             >
               Explore
             </Link>
@@ -153,6 +180,7 @@ const Navbar = () => {
                 key={category.name}
                 to={category.path}
                 className="block px-3 py-2 text-base font-medium text-ink/80 dark:text-parchment/80 hover:text-ink dark:hover:text-parchment hover:bg-ink/5 dark:hover:bg-parchment/5 rounded-md pl-6"
+                onClick={() => setMobileMenuOpen(false)}
               >
                 {category.name}
               </Link>
@@ -168,7 +196,7 @@ const Navbar = () => {
             </div>
             
             {!isLoggedIn && (
-              <Link to="/auth">
+              <Link to="/auth" onClick={() => setMobileMenuOpen(false)}>
                 <Button 
                   className="w-full mt-2 bg-ink text-parchment hover:bg-ink-light dark:bg-parchment dark:text-ink dark:hover:bg-parchment-dark"
                 >
