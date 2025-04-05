@@ -10,7 +10,6 @@ const DeviceSelection = () => {
   const { toast } = useToast();
   
   const selectDevice = (deviceType: string) => {
-    console.log(`Device selected: ${deviceType}`);
     localStorage.setItem("preferred-device", deviceType);
     localStorage.setItem("device-selected", "true");
     
@@ -19,22 +18,16 @@ const DeviceSelection = () => {
       description: "Your experience will be optimized for this device type.",
     });
     
-    // Navigate to user type selection
-    navigate("/select-user-type");
+    navigate("/");
   };
   
   useEffect(() => {
     // Check if user has already selected a device
     const deviceSelected = localStorage.getItem("device-selected");
-    console.log("DeviceSelection mounted, device selected:", deviceSelected);
     
-    // If device already selected and user type is also selected, redirect to home
-    if (deviceSelected && localStorage.getItem("user-type")) {
+    // If device already selected, redirect to home
+    if (deviceSelected) {
       navigate("/");
-    }
-    // If device selected but no user type, go to user type selection
-    else if (deviceSelected) {
-      navigate("/select-user-type");
     }
   }, [navigate]);
 
