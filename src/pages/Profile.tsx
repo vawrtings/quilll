@@ -1,5 +1,6 @@
 
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "@/components/Layout/Navbar";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
@@ -11,6 +12,7 @@ const Profile = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Check if user is logged in - in a real app, this would validate with Supabase
@@ -30,6 +32,16 @@ const Profile = () => {
     
     checkLoginStatus();
   }, [toast]);
+
+  // Function to simulate login for demo purposes
+  const handleDemoLogin = () => {
+    localStorage.setItem("quill-logged-in", "true");
+    setIsLoggedIn(true);
+    toast({
+      title: "Demo login successful",
+      description: "You're now logged in to view your profile",
+    });
+  };
 
   if (loading) {
     return (
@@ -55,12 +67,21 @@ const Profile = () => {
           <p className="text-lg text-ink/70 dark:text-parchment/70 mb-8">
             Please log in to view and edit your profile
           </p>
-          <Button
-            onClick={() => window.location.href = "/auth"}
-            className="bg-ink text-parchment hover:bg-ink-light dark:bg-parchment dark:text-ink dark:hover:bg-parchment-dark"
-          >
-            Sign In
-          </Button>
+          <div className="space-x-4">
+            <Button
+              onClick={() => navigate("/auth")}
+              className="bg-ink text-parchment hover:bg-ink-light dark:bg-parchment dark:text-ink dark:hover:bg-parchment-dark"
+            >
+              Sign In
+            </Button>
+            <Button
+              onClick={handleDemoLogin}
+              variant="outline"
+              className="border-ink text-ink dark:border-parchment dark:text-parchment"
+            >
+              Demo Login (For Testing)
+            </Button>
+          </div>
         </div>
       </div>
     );
@@ -111,7 +132,7 @@ const Profile = () => {
                 Your published works will appear here
               </p>
               <Button 
-                onClick={() => window.location.href = "/upload"}
+                onClick={() => navigate("/upload")}
                 className="bg-ink text-parchment hover:bg-ink-light dark:bg-parchment dark:text-ink dark:hover:bg-parchment-dark"
               >
                 Create Your First Publication
@@ -127,7 +148,7 @@ const Profile = () => {
                 Writings you save will appear here
               </p>
               <Button 
-                onClick={() => window.location.href = "/explore"}
+                onClick={() => navigate("/explore")}
                 className="bg-ink text-parchment hover:bg-ink-light dark:bg-parchment dark:text-ink dark:hover:bg-parchment-dark"
               >
                 Explore Writings
@@ -143,7 +164,7 @@ const Profile = () => {
                 Your works in progress will be saved here
               </p>
               <Button 
-                onClick={() => window.location.href = "/upload"}
+                onClick={() => navigate("/upload")}
                 className="bg-ink text-parchment hover:bg-ink-light dark:bg-parchment dark:text-ink dark:hover:bg-parchment-dark"
               >
                 Start a Draft

@@ -1,18 +1,11 @@
 
+@tailwind base;
 @layer base {
-  body {
-    @apply cursor-ink-drop;
+  html {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%231A1F2C' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 19l7-7 3 3-7 7-3-3z'/%3E%3Cpath d='M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z'/%3E%3Cpath d='M2 2l7.586 7.586'/%3E%3Ccircle cx='11' cy='11' r='2'/%3E%3C/svg%3E"), auto;
   }
-
-  a, button, input, textarea, select, .clickable {
-    @apply cursor-pointer;
+  
+  .cursor-quill {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24' fill='none' stroke='%231A1F2C' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m20 17-2-3-3-3 3-3 2-3v12Z'/%3E%3Cpath d='M20 17h-5c-.6 0-1 .4-1 1v1c0 .6-.4 1-1 1h-6a2 2 0 0 1-2-2v-4c0-.6.4-1 1-1h4a1 1 0 0 0 1-1v-3'/%3E%3C/svg%3E"), auto;
   }
-}
-
-.cursor-ink-drop {
-  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><circle cx='8' cy='8' r='4' fill='%231A1F2C'/></svg>") 8 8, auto;
-}
-
-.dark .cursor-ink-drop {
-  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><circle cx='8' cy='8' r='4' fill='%23F6F5F0'/></svg>") 8 8, auto;
 }

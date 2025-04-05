@@ -1,22 +1,28 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { BookOpen, Menu, X, Upload, User, Search } from "lucide-react";
+import { BookOpen, Menu, X, Upload, User, Search, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useDeviceContext } from "@/contexts/DeviceContext";
-import ThemeSwitcher from "@/components/ThemeSwitcher";
+import { useTheme } from "next-themes";
 import { 
   NavigationMenu,
   NavigationMenuList,
   NavigationMenuItem,
   NavigationMenuLink,
-  navigationMenuTriggerStyle
 } from "@/components/ui/navigation-menu";
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { isMobile } = useDeviceContext();
   const location = useLocation();
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  // Avoid hydration mismatch with theme
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const categories = [
     { name: "Stories", path: "/explore/stories" },
@@ -24,6 +30,9 @@ const Navbar = () => {
     { name: "Poems", path: "/explore/poems" },
     { name: "Writings", path: "/explore/writings" }
   ];
+
+  // Check if user is logged in - in a real app, this would validate with Supabase
+  const isLoggedIn = localStorage.getItem("quill-logged-in") === "true";
 
   return (
     <nav className="bg-parchment/90 dark:bg-ink/90 backdrop-blur-sm sticky top-0 z-50 border-b border-ink/10 dark:border-parchment/10">
@@ -67,7 +76,22 @@ const Navbar = () => {
           </div>
           
           <div className="flex items-center space-x-2">
-            <ThemeSwitcher />
+            {/* Theme Switcher */}
+            {mounted && (
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                className="text-ink/80 dark:text-parchment/80 hover:text-ink dark:hover:text-parchment hover:bg-ink/5 dark:hover:bg-parchment/5"
+                aria-label="Toggle theme"
+              >
+                {theme === "dark" ? (
+                  <Sun className="h-5 w-5" />
+                ) : (
+                  <Moon className="h-5 w-5" />
+                )}
+              </Button>
+            )}
 
             <Link to="/upload">
               <Button 
@@ -89,14 +113,16 @@ const Navbar = () => {
               </Button>
             </Link>
             
-            <Link to="/auth">
-              <Button 
-                variant="outline" 
-                className="border-ink text-ink dark:border-parchment dark:text-parchment hidden md:flex"
-              >
-                Sign In
-              </Button>
-            </Link>
+            {!isLoggedIn && (
+              <Link to="/auth">
+                <Button 
+                  variant="outline" 
+                  className="border-ink text-ink dark:border-parchment dark:text-parchment hidden md:flex"
+                >
+                  Sign In
+                </Button>
+              </Link>
+            )}
             
             {/* Mobile menu button */}
             <Button
@@ -140,13 +166,16 @@ const Navbar = () => {
                 className="w-full h-10 rounded-md border border-input bg-background pl-8 pr-3 text-sm dark:bg-ink-light dark:text-parchment"
               />
             </div>
-            <Link to="/auth">
-              <Button 
-                className="w-full mt-2 bg-ink text-parchment hover:bg-ink-light dark:bg-parchment dark:text-ink dark:hover:bg-parchment-dark"
-              >
-                Sign In
-              </Button>
-            </Link>
+            
+            {!isLoggedIn && (
+              <Link to="/auth">
+                <Button 
+                  className="w-full mt-2 bg-ink text-parchment hover:bg-ink-light dark:bg-parchment dark:text-ink dark:hover:bg-parchment-dark"
+                >
+                  Sign In
+                </Button>
+              </Link>
+            )}
           </div>
         </div>
       )}

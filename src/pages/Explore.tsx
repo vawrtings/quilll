@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Search, Filter, BookOpen, AlertCircle } from "lucide-react";
@@ -8,7 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 import Navbar from "@/components/Layout/Navbar";
 import WriterCard from "@/components/Writer/WriterCard";
 import ContentUploader from "@/components/Writer/ContentUploader";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { useDeviceContext } from "@/contexts/DeviceContext";
 
 const Explore = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -17,7 +18,7 @@ const Explore = () => {
   const [category, setCategory] = useState("all");
   const navigate = useNavigate();
   const { toast } = useToast();
-  const isMobile = useIsMobile();
+  const { isMobile, isTablet } = useDeviceContext();
   const { categoryParam } = useParams();
 
   // Determine default category from URL if present
@@ -57,7 +58,7 @@ const Explore = () => {
         </div>
         
         <Tabs defaultValue={category} onValueChange={setCategory} className="mb-8">
-          <TabsList className="grid grid-cols-5 mb-8">
+          <TabsList className={`grid ${isMobile ? 'grid-cols-2 gap-2' : 'grid-cols-5'} mb-8`}>
             <TabsTrigger value="all">All</TabsTrigger>
             <TabsTrigger value="stories">Stories</TabsTrigger>
             <TabsTrigger value="series">Series</TabsTrigger>
@@ -92,7 +93,7 @@ const Explore = () => {
               <>
                 {posts.length > 0 ? (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {posts.map((writing) => (
+                    {posts.map((writing: any) => (
                       <WriterCard key={writing.id} {...writing} />
                     ))}
                   </div>
