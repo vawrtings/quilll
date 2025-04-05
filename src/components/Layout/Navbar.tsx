@@ -69,34 +69,34 @@ const Navbar = () => {
           <div className="flex items-center space-x-2">
             <ThemeSwitcher />
 
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              className="text-ink/80 dark:text-parchment/80 hover:text-ink dark:hover:text-parchment hover:bg-ink/5 dark:hover:bg-parchment/5"
-              as={Link}
-              to="/upload"
-            >
-              <Upload className="h-5 w-5" />
-            </Button>
+            <Link to="/upload">
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="text-ink/80 dark:text-parchment/80 hover:text-ink dark:hover:text-parchment hover:bg-ink/5 dark:hover:bg-parchment/5"
+              >
+                <Upload className="h-5 w-5" />
+              </Button>
+            </Link>
             
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              className="text-ink/80 dark:text-parchment/80 hover:text-ink dark:hover:text-parchment hover:bg-ink/5 dark:hover:bg-parchment/5"
-              as={Link}
-              to="/profile"
-            >
-              <User className="h-5 w-5" />
-            </Button>
+            <Link to="/profile">
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="text-ink/80 dark:text-parchment/80 hover:text-ink dark:hover:text-parchment hover:bg-ink/5 dark:hover:bg-parchment/5"
+              >
+                <User className="h-5 w-5" />
+              </Button>
+            </Link>
             
-            <Button 
-              variant="outline" 
-              className="border-ink text-ink dark:border-parchment dark:text-parchment hidden md:flex"
-              as={Link}
-              to="/auth"
-            >
-              Sign In
-            </Button>
+            <Link to="/auth">
+              <Button 
+                variant="outline" 
+                className="border-ink text-ink dark:border-parchment dark:text-parchment hidden md:flex"
+              >
+                Sign In
+              </Button>
+            </Link>
             
             {/* Mobile menu button */}
             <Button
@@ -140,13 +140,13 @@ const Navbar = () => {
                 className="w-full h-10 rounded-md border border-input bg-background pl-8 pr-3 text-sm dark:bg-ink-light dark:text-parchment"
               />
             </div>
-            <Button 
-              className="w-full mt-2 bg-ink text-parchment hover:bg-ink-light dark:bg-parchment dark:text-ink dark:hover:bg-parchment-dark"
-              as={Link}
-              to="/auth"
-            >
-              Sign In
-            </Button>
+            <Link to="/auth">
+              <Button 
+                className="w-full mt-2 bg-ink text-parchment hover:bg-ink-light dark:bg-parchment dark:text-ink dark:hover:bg-parchment-dark"
+              >
+                Sign In
+              </Button>
+            </Link>
           </div>
         </div>
       )}
